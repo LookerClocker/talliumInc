@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/main.css"/>
+    <script src="/players.json"></script>
+    <title>Index</title>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row header">
+        <div class="col-xs-12 col-md-3 col-md-push-1">
+            <img class="logo-position" src="img/logo.png">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 text-center">
+            <form id="searchForm">
+                <div class="form-group">
+                    <input type="search" class="form-control" id="searchAction" placeholder="enter whatever you want">
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-8 col-md-push-1" id="playersList"></div>
+    </div>
+</div>
+
+<script src="js/common.js"></script>
+</body>
+</html>
