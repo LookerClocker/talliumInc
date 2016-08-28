@@ -1,7 +1,7 @@
 'use strict';
 
 document.addEventListener('DOMContentLoaded', ()=> {
-	let resultArray         = [],
+	let 	resultArray         = [],
 		positionsArray      = [],
 		splitedPlayerInfo   = [],
 		playerInfo          = document.getElementById('searchAction');
