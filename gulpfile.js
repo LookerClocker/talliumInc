@@ -1,6 +1,6 @@
 'use strict';
 
-let del         = require('del'),
+let 	del         = require('del'),
 	gulp        = require('gulp'),
 	sass        = require('gulp-sass'),
 	bable       = require('gulp-babel'),
