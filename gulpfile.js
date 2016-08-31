@@ -44,7 +44,7 @@ gulp.task('bable-compile', ()=>{
 	.pipe(bable({
 			presets: ['es2015']
 		}))
-	.pipe(gulp.dest('public/js'))
+	.pipe(gulp.dest('public'))
 });
 
 gulp.task('watch', ['browser-sync', 'sass'], ()=> {
