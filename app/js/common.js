@@ -1,22 +1,23 @@
 'use strict';
 
-document.addEventListener('DOMContentLoaded', ()=> {
-	let 	resultArray         = [],
-		positionsArray      = [],
-		splitedPlayerInfo   = [],
-		playerInfo          = document.getElementById('searchAction');
+document.addEventListener('DOMContentLoaded', function () {
+
+	var resultArray = [],
+		positionsArray = [],
+		splitedPlayerInfo = [],
+		playerInfo = document.getElementById('searchAction');
 
 	// Check status of response
 	function checkStatus(response) {
 		if (response.status >= 200 && response.status < 300) {
 			return response;
 		}
-		let error = new Error(response.statusText);
+		var error = new Error(response.statusText);
 		error.response = response;
 		throw error;
 	}
 
-	//Parse response
+	// Parse response
 	function parseJSON(response) {
 		return response.json();
 	}
@@ -24,10 +25,10 @@ document.addEventListener('DOMContentLoaded', ()=> {
 	// Make dynamically list of players
 	function dynamicList(array) {
 		// Create the list element:
-		let list = document.createElement('ul');
-		for (let i = 0; i < array.length; i++) {
+		var list = document.createElement('ul');
+		for (var i = 0; i < array.length; i++) {
 			// Create the list item:
-			let item = document.createElement('li');
+			var item = document.createElement('li');
 			item.classList.add('name-style');
 			// Set its contents:
 			item.appendChild(document.createTextNode(array[i]));
@@ -38,9 +39,9 @@ document.addEventListener('DOMContentLoaded', ()=> {
 		return list;
 	}
 
-	//Searching players by their "position" and "name"
+	// Searching players by their "position" and "name"
 	function search(serverResponse) {
-		serverResponse.forEach(item=> {
+		serverResponse.forEach(function (item) {
 			if (playerInfo.value === item.position) {
 				// `Cause "position" may consist of two o more worlds
 				positionsArray = item.position.split(' ');
@@ -48,8 +49,8 @@ document.addEventListener('DOMContentLoaded', ()=> {
 				splitedPlayerInfo = playerInfo.value.split(' ');
 				// If "position" consist of more than one word
 				if (positionsArray.length > 1) {
-					for (let elem = 0; elem <= splitedPlayerInfo.length; elem++) {
-						if ((splitedPlayerInfo[elem] === positionsArray[elem]) && (splitedPlayerInfo[elem + 1] === positionsArray[elem + 1])) {
+					for (var elem = 0; elem <= splitedPlayerInfo.length; elem++) {
+						if (splitedPlayerInfo[elem] === positionsArray[elem] && splitedPlayerInfo[elem + 1] === positionsArray[elem + 1]) {
 							resultArray.push(item.name);
 							break;
 						}
@@ -63,18 +64,11 @@ document.addEventListener('DOMContentLoaded', ()=> {
 				}
 			}
 			// Get players name by "position" and "nationality"
-			else if (playerInfo.value === item.position + ' ' + item.nationality) {
+			else if (playerInfo.value === item.position + ' ' + item.nationality || playerInfo.value === item.nationality + ' ' + item.position) {
 				resultArray.push(item.name);
 			}
-			else if (playerInfo.value === item.nationality + ' ' + item.position) {
-				resultArray.push(item.name);
-			}
-			// Get players name by "nationality"
-			else if (playerInfo.value === item.nationality) {
-				resultArray.push(item.name);
-			}
-			// Just get player`s name
-			else if (playerInfo.value === item.name) {
+			// Get players name by "nationality" or "name"
+			else if (playerInfo.value === item.nationality || playerInfo.value === item.name) {
 				resultArray.push(item.name);
 			}
 		});
@@ -83,18 +77,14 @@ document.addEventListener('DOMContentLoaded', ()=> {
 	fetch('players.json', {
 		method: 'GET',
 		credentials: 'same-origin' // CORS-mode
-	})
-		.then(checkStatus)
-		.then(parseJSON)
-		.then(response => {
-			document.getElementById('searchForm').addEventListener('submit', event => {
-				search(response);
-				event.preventDefault();
-				dynamicList(resultArray);
-				// Add the contents of resultArray
-				document.getElementById('playersList').appendChild(dynamicList(resultArray));
-				resultArray = [];
-			});
+	}).then(checkStatus).then(parseJSON).then(function (response) {
+		document.getElementById('searchForm').addEventListener('submit', function (event) {
+			search(response);
+			event.preventDefault();
+			dynamicList(resultArray);
+			// Add the contents of resultArray
+			document.getElementById('playersList').appendChild(dynamicList(resultArray));
+			resultArray = [];
 		});
-
+	});
 });

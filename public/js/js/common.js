@@ -1,6 +1,7 @@
 'use strict';
 
 document.addEventListener('DOMContentLoaded', function () {
+
 	var resultArray = [],
 	    positionsArray = [],
 	    splitedPlayerInfo = [],
@@ -16,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		throw error;
 	}
 
-	//Parse response
+	// Parse response
 	function parseJSON(response) {
 		return response.json();
 	}
@@ -38,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		return list;
 	}
 
-	//Searching players by their "position" and "name"
+	// Searching players by their "position" and "name"
 	function search(serverResponse) {
 		serverResponse.forEach(function (item) {
 			if (playerInfo.value === item.position) {
@@ -63,19 +64,13 @@ document.addEventListener('DOMContentLoaded', function () {
 					}
 			}
 			// Get players name by "position" and "nationality"
-			else if (playerInfo.value === item.position + ' ' + item.nationality) {
-					resultArray.push(item.name);
-				} else if (playerInfo.value === item.nationality + ' ' + item.position) {
+			else if (playerInfo.value === item.position + ' ' + item.nationality || playerInfo.value === item.nationality + ' ' + item.position) {
 					resultArray.push(item.name);
 				}
-				// Get players name by "nationality"
-				else if (playerInfo.value === item.nationality) {
+				// Get players name by "nationality" or "name"
+				else if (playerInfo.value === item.nationality || playerInfo.value === item.name) {
 						resultArray.push(item.name);
 					}
-					// Just get player`s name
-					else if (playerInfo.value === item.name) {
-							resultArray.push(item.name);
-						}
 		});
 	}
 
